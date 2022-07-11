@@ -14,29 +14,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (def nrows 5)
-(def ncols 7)
+(def ncols 6)
 
 (def α (/ π 12))                        ; curvature of the columns
 (def β (/ π 36))                        ; curvature of the rows
 (def centerrow (- nrows 3))             ; controls front-back tilt
-(def centercol 4)                       ; controls left-right tilt / tenting (higher number is more tenting)
+(def centercol 2)                       ; controls left-right tilt / tenting (higher number is more tenting)
 (def tenting-angle (/ π 12))            ; or, change this for more precise tenting control
 
 (def pinky-15u true)                   ; controls whether the outer column uses 1.5u keys
 (def first-15u-row 0)                   ; controls which should be the first row to have 1.5u keys on the outer column
 (def last-15u-row 3)                    ; controls which should be the last row to have 1.5u keys on the outer column
 
-(def extra-row true)                   ; adds an extra bottom row to the outer columns
-(def inner-column true)                ; adds an extra inner column (two less rows than nrows)
-(def thumb-style "cf")                ; toggles between "default", "mini", and "cf" thumb cluster
+(def extra-row false)                   ; adds an extra bottom row to the outer columns
+(def inner-column false)                ; adds an extra inner column (two less rows than nrows)
+(def thumb-style "mini")                ; toggles between "default", "mini", and "cf" thumb cluster
 
 (def column-style :standard)
+;(def column-style :orthographic)
 
 (defn column-offset [column]
   (if inner-column
     (cond (<= column 1) [0 -2 0]
           (= column 3) [0 2.82 -4.5]
-          (>= column 5) [0 -12 5.64]    ; original [0 -5.8 5.64]
+          (>= column 5) [0 -5.8 5.64]    ; original [0 -5.8 5.64]
           :else [0 0 0])
     (cond (= column 2) [0 2.82 -4.5]
           (>= column 4) [0 -12 5.64]    ; original [0 -5.8 5.64]
@@ -44,12 +45,12 @@
 
 (def thumb-offsets [6 -3 7])
 
-(def keyboard-z-offset 8)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
+(def keyboard-z-offset 9)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
 (def extra-height 1.0)                  ; original= 0.5
 
-(def wall-z-offset -8)                 ; length of the first downward-sloping part of the wall (negative)
+(def wall-z-offset -5)                 ; length of the first downward-sloping part of the wall (negative)
 (def wall-xy-offset 5)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
 (def wall-thickness 2)                  ; wall thickness parameter; originally 5
 
@@ -308,7 +309,8 @@
 ;; Web Connectors ;;
 ;;;;;;;;;;;;;;;;;;;;
 
-(def web-thickness 4.5)
+;((def web-thickness 4.5)
+(def web-thickness 2)
 (def post-size 0.1)
 (def web-post (->> (cube post-size post-size web-thickness)
                    (translate [0 0 (+ (/ web-thickness -2)
